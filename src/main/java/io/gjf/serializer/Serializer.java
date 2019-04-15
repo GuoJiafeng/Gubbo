@@ -1,4 +1,4 @@
-package io.gjf.protocol;
+package io.gjf.serializer;
 
 /**
  * Create by GuoJF on 2019/4/15

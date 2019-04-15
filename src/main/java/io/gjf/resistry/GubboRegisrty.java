@@ -11,6 +11,10 @@ import java.util.List;
  */
 public interface GubboRegisrty {
 
+
+    String PREFIX = "/gubbo";
+    String SUFFIX = "/providers";
+
     //注册服务
     void regisrtyService(Class targetInterface, HostAndPort hostAndPort);
 

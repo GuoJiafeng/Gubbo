@@ -1,9 +1,11 @@
 package io.gjf.protocol;
 
+import io.gjf.serializer.Serializer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
+import io.netty.handler.codec.MessageToMessageEncoder;
 
 
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
 /**
  * Create by GuoJF on 2019/4/15
  */
-public class ObjectEncoder extends MessageToMessageDecoder<Object> {
+public class ObjectEncoder extends MessageToMessageEncoder<Object> {
 
     private Serializer serializer;
 
@@ -19,14 +21,13 @@ public class ObjectEncoder extends MessageToMessageDecoder<Object> {
         this.serializer = serializer;
     }
 
-    protected void decode(ChannelHandlerContext ctx, Object msg, List<Object> out) throws Exception {
 
-        byte[] bytes = serializer.serialize(msg);
+    @Override
+    protected void encode(ChannelHandlerContext channelHandlerContext, Object o, List<Object> list) throws Exception {
+        byte[] bytes = serializer.serialize(o);
 
         ByteBuf buf = Unpooled.buffer();
         buf.writeBytes(bytes);
-        out.add(buf);
-
-
+        list.add(buf);
     }
 }

@@ -5,21 +5,21 @@ import java.util.Arrays;
 
 /**
  * Create by GuoJF on 2019/4/15
- *
+ * <p>
  * 请求报文
  */
-public class MethodInvokeMeta  implements Serializable {
+public class MethodInvokeMeta implements Serializable {
 
     private Class targetInterface;
     private String methodName;
-    private Class<?> paramterTypes;
+    private Class<?>[] paramterTypes;
     private Object[] args;
 
 
     public MethodInvokeMeta() {
     }
 
-    public MethodInvokeMeta(Class targetInterface, String methodName, Class<?> paramterTypes, Object[] args) {
+    public MethodInvokeMeta(Class targetInterface, String methodName, Class<?>[] paramterTypes, Object[] args) {
         this.targetInterface = targetInterface;
         this.methodName = methodName;
         this.paramterTypes = paramterTypes;
@@ -43,11 +43,11 @@ public class MethodInvokeMeta  implements Serializable {
         this.methodName = methodName;
     }
 
-    public Class<?> getParamterTypes() {
+    public Class<?>[] getParamterTypes() {
         return paramterTypes;
     }
 
-    public void setParamterTypes(Class<?> paramterTypes) {
+    public void setParamterTypes(Class<?>[] paramterTypes) {
         this.paramterTypes = paramterTypes;
     }
 

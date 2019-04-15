@@ -3,6 +3,7 @@ package io.gjf.server;
 import io.gjf.commons.HostAndPort;
 import io.gjf.protocol.*;
 import io.gjf.resistry.GubboRegisrty;
+import io.gjf.serializer.JDKSerializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoop;
@@ -40,9 +41,10 @@ public class GubboServiceProviderExpose {
     private GubboRegisrty regisrty;
 
 
-    private GubboServiceProviderExpose(GubboRegisrty regisrty, Integer port) {
+    public GubboServiceProviderExpose(GubboRegisrty regisrty, Integer port) {
         this.regisrty = regisrty;
 
+        this.port = port;
 
         sbt = new ServerBootstrap();
 
@@ -50,8 +52,8 @@ public class GubboServiceProviderExpose {
         worker = new NioEventLoopGroup();
 
 
-        sbt.group(boss);
-        sbt.group(worker);
+        sbt.group(boss,worker);
+
 
         sbt.channel(NioServerSocketChannel.class);
 
@@ -71,10 +73,10 @@ public class GubboServiceProviderExpose {
 
 
                 pipeline.addLast(new LengthFieldBasedFrameDecoder(65535, 0, 2, 0, 2));
-                pipeline.addLast(new ObjectDecoder(null));
+                pipeline.addLast(new ObjectDecoder(new JDKSerializer()));
 
                 pipeline.addLast(new LengthFieldPrepender(2));
-                pipeline.addLast(new ObjectEncoder(null));
+                pipeline.addLast(new ObjectEncoder(new JDKSerializer()));
                 pipeline.addLast(new ChannelHandlerAdapter() {
                     @Override
                     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -88,7 +90,7 @@ public class GubboServiceProviderExpose {
                         Object obj = beanFactory.get(methodInvokeMeta.getTargetInterface());
 
 
-                        Method method = obj.getClass().getMethod(methodInvokeMeta.getMethodName(), methodInvokeMeta.getParamterTypes(), methodInvokeMeta.getParamterTypes());
+                        Method method = obj.getClass().getMethod(methodInvokeMeta.getMethodName(), methodInvokeMeta.getParamterTypes());
 
 
                         Result result = new Result();
@@ -116,7 +118,7 @@ public class GubboServiceProviderExpose {
 
                     @Override
                     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-                        super.exceptionCaught(ctx, cause);
+                        cause.printStackTrace();
                     }
                 });
 
@@ -129,6 +131,7 @@ public class GubboServiceProviderExpose {
             public void run() {
 
                 try {
+                    System.out.println("服务启动：" + port);
                     //次方法会阻塞 使用线程的方式开启多个
                     ChannelFuture channelFuture = sbt.bind(port).sync();
                     channelFuture.channel().closeFuture().sync();
@@ -160,5 +163,7 @@ public class GubboServiceProviderExpose {
 
     }
 
-
+    public void setBeanFactory(Map<Class, Object> beanFactory) {
+        this.beanFactory = beanFactory;
+    }
 }
