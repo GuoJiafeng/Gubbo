@@ -1,0 +1,11 @@
+target
+upload
+.idea
+*.iws
+*.iml
+*.ipr
+.mvn
+*.md
+*.cmd
+*.ini
+project2017/out
