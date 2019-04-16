@@ -3,6 +3,7 @@ package io.gjf.cluster;
 import io.gjf.commons.HostAndPort;
 import io.gjf.commons.Transport;
 import io.gjf.protocol.MethodInvokeMeta;
+import io.gjf.protocol.MethodInvokeMetaWrap;
 import io.gjf.protocol.ResultWrap;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface Cluster {
 
-ResultWrap invoker(List<HostAndPort> hostAndPortList, ClusterLoadBalancer loadBalancer, Transport transport, MethodInvokeMeta methodInvokeMeta);
+ResultWrap invoker(List<HostAndPort> hostAndPortList, ClusterLoadBalancer loadBalancer, Transport transport, MethodInvokeMetaWrap methodInvokeMetaWrap);
 
 
 

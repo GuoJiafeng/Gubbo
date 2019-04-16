@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
 
-        GubboRegisrty gubboRegisrty = new ZookeeperRegistry("192.168.5.11:2181");
+        GubboRegisrty gubboRegisrty = new ZookeeperRegistry("192.168.134.99:2181");
         GubboServiceProviderExpose gubboServiceProviderExpose = new GubboServiceProviderExpose(gubboRegisrty, 20880);
 
         Map<Class, Object> beans = new HashMap<>();

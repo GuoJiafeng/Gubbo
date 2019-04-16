@@ -65,7 +65,7 @@ public class ZookeeperRegistry implements GubboRegisrty {
         });
 
 
-        return null;
+        return hostAndPorts;
     }
 
     public void subcribeService(Class targetInterface, List<HostAndPort> hostAndPortList) {

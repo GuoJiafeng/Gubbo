@@ -22,17 +22,16 @@ public class TestClient {
         MethodInvokeMetaWrap methodInvokeMetaWrap = new MethodInvokeMetaWrap(methodInvokeMeta);
 
 
-        ResultWrap resultWrap = transport.transfer(new HostAndPort("192.168.5.208", 20880), methodInvokeMetaWrap);
+        ResultWrap resultWrap = transport.transfer(new HostAndPort("192.168.31.170", 20880), methodInvokeMetaWrap);
 
         Result result = resultWrap.getResult();
 
         Object value = result.getReturnValue();
 
-        if (result.getException()!=null){
+        if (result.getException() != null) {
 
             System.out.println("12312");
         }
-
 
 
         System.out.println(value.toString());

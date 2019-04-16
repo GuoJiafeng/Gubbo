@@ -36,7 +36,7 @@ public class GubboServiceProviderExpose {
     EventLoopGroup worker;
     Integer port;
 
-    //持有Registry对戏aNG
+    //持有Registry对象
 
     private GubboRegisrty regisrty;
 
